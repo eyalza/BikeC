@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* BikeC Theme - Global Styles */
+
+:root {
+  /* BikeC Brand Colors */
+  --bikec-primary: #FDB913;
+  --bikec-secondary: #B0B5BA;
+  --bikec-dark: #1A1A1A;
+  --bikec-dark-alt: #252525;
+  --bikec-black: #0F0F0F;
+}
+
+/* Default Background & Text Colors */
+body {
+  background-color: var(--bikec-dark);
+  color: #FFFFFF;
+  direction: rtl; /* Hebrew RTL by default */
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection Color - Brand Yellow */
+::selection {
+  background-color: var(--bikec-primary);
+  color: var(--bikec-black);
+}
+
+::-moz-selection {
+  background-color: var(--bikec-primary);
+  color: var(--bikec-black);
+}
+
+/* Base Layer Utilities */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-white;
+  }
+  
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+  
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+  
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+  
+  p {
+    @apply text-base md:text-lg leading-relaxed;
+  }
+  
+  a {
+    @apply transition-colors duration-200;
+  }
+}
+
+/* Component Layer - BikeC Specific */
+@layer components {
+  /* Primary Button */
+  .btn-primary {
+    @apply bg-bikec-primary text-bikec-black font-bold px-6 py-3 rounded-lg;
+    @apply hover:bg-yellow-400 transition-all duration-300;
+    @apply shadow-lg hover:shadow-xl;
+  }
+  
+  /* Secondary Button */
+  .btn-secondary {
+    @apply bg-bikec-dark-alt text-white font-bold px-6 py-3 rounded-lg;
+    @apply border-2 border-bikec-secondary;
+    @apply hover:bg-bikec-secondary hover:text-bikec-dark transition-all duration-300;
+  }
+  
+  /* Card Style */
+  .card-bikec {
+    @apply bg-bikec-dark-alt rounded-lg p-6;
+    @apply border border-bikec-secondary/20;
+    @apply shadow-lg hover:shadow-2xl transition-shadow duration-300;
+  }
+  
+  /* Section Container */
+  .section-bikec {
+    @apply py-16 md:py-24 px-4 md:px-8;
+  }
+  
+  /* Accent Border */
+  .border-accent {
+    @apply border-s-4 border-bikec-primary;
+  }
+}
+
+/* Utility Layer */
+@layer utilities {
+  /* Text Gradient - Yellow to White */
+  .text-gradient-bikec {
+    @apply bg-gradient-to-l from-bikec-primary to-white;
+    @apply bg-clip-text text-transparent;
+  }
+  
+  /* Rugged Texture Overlay */
+  .texture-overlay {
+    position: relative;
+  }
+  
+  .texture-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.02) 0px,
+        transparent 1px,
+        transparent 2px,
+        rgba(255, 255, 255, 0.02) 3px
+      );
+    pointer-events: none;
+  }
+}
+
+/* RTL Specific Adjustments */
+[dir="rtl"] {
+  /* Ensure proper text alignment */
+  text-align: start;
+}
+
+[dir="ltr"] {
+  /* Override for any English content */
+  text-align: start;
+}
+
+/* Focus Styles - Accessibility */
+*:focus-visible {
+  outline: 2px solid var(--bikec-primary);
+  outline-offset: 2px;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bikec-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bikec-secondary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bikec-primary);
+}

@@ -1,0 +1,16 @@
+# BikeC Project Rules
+
+## Brand Context
+- Name: BikeC
+- Design: Rugged, Professional, High-contrast
+- Colors: Primary #FDB913 (Yellow), Secondary #B0B5BA (Gray), Background #1A1A1A (Deep Charcoal)
+
+## Tech Stack & Language
+- Framework: Next.js (App Router)
+- Styling: Tailwind CSS (Custom BikeC theme)
+- Language: Hebrew (MANDATORY RTL support)
+
+## Critical AI Instructions
+1. **Always use RTL properties**: Use `ps-` instead of `pl-`, `text-start` instead of `text-right`.
+2. **Image Paths**: Always reference images from `/images/` (not `/public/images/`). Verify filename extensions (avoid .png.png).
+3. **Consistency**: Reference `@PRD.md` and `@LESSONS_LEARNED.md` before starting any new feature.
