@@ -1,0 +1,142 @@
+{
+  "tours": [
+    {
+      "id": "tour-001",
+      "title": "טיול הרי ירושלים",
+      "titleEn": "Jerusalem Hills Tour",
+      "date": "2026-03-15",
+      "time": "07:00",
+      "difficulty": "קשה",
+      "difficultyLevel": "hard",
+      "location": "ירושלים",
+      "locationEn": "Jerusalem",
+      "duration": "6 שעות",
+      "distance": "65 ק״מ",
+      "elevation": "+1,200 מ׳",
+      "spotsAvailable": 5,
+      "maxParticipants": 15,
+      "price": 180,
+      "description": "טיול מאתגר דרך הרי ירושלים עם נופים עוצרי נשימה ועליות קשות.",
+      "highlights": [
+        "נוף פנורמי של ירושלים",
+        "שבילי עפר מאתגרים",
+        "הפסקת קפה בעין כרם"
+      ]
+    },
+    {
+      "id": "tour-002",
+      "title": "סובב הכנרת",
+      "titleEn": "Sea of Galilee Loop",
+      "date": "2026-03-20",
+      "time": "06:30",
+      "difficulty": "בינונית",
+      "difficultyLevel": "medium",
+      "location": "טבריה",
+      "locationEn": "Tiberias",
+      "duration": "5 שעות",
+      "distance": "50 ק״מ",
+      "elevation": "+450 מ׳",
+      "spotsAvailable": 8,
+      "maxParticipants": 20,
+      "price": 150,
+      "description": "טיול מרהיב סביב הכנרת עם עצירות באתרים היסטוריים.",
+      "highlights": [
+        "נופי הכנרת המדהימים",
+        "ביקור בקפרנאום",
+        "שביל אופניים ייעודי"
+      ]
+    },
+    {
+      "id": "tour-003",
+      "title": "נחל עמוד וסנפיר",
+      "titleEn": "Amud and Sanfir Stream",
+      "date": "2026-03-22",
+      "time": "07:30",
+      "difficulty": "קשה",
+      "difficultyLevel": "hard",
+      "location": "גליל עליון",
+      "locationEn": "Upper Galilee",
+      "duration": "7 שעות",
+      "distance": "70 ק״מ",
+      "elevation": "+1,500 מ׳",
+      "spotsAvailable": 3,
+      "maxParticipants": 12,
+      "price": 200,
+      "description": "טיול אתגרי לרוכבים מנוסים דרך נחלי הגליל המרהיבים.",
+      "highlights": [
+        "שבילי סינגל טכניים",
+        "מפלי מים בעונה",
+        "יערות ירוקים"
+      ]
+    },
+    {
+      "id": "tour-004",
+      "title": "פארק הירקון",
+      "titleEn": "Yarkon Park Ride",
+      "date": "2026-03-25",
+      "time": "08:00",
+      "difficulty": "קלה",
+      "difficultyLevel": "easy",
+      "location": "תל אביב",
+      "locationEn": "Tel Aviv",
+      "duration": "3 שעות",
+      "distance": "30 ק״מ",
+      "elevation": "+50 מ׳",
+      "spotsAvailable": 12,
+      "maxParticipants": 25,
+      "price": 100,
+      "description": "רכיבה נעימה ומשפחתית לאורך נהר הירקון.",
+      "highlights": [
+        "שביל ירוק ומוצל",
+        "מתאים למשפחות",
+        "ארוחת בוקר בגן"
+      ]
+    },
+    {
+      "id": "tour-005",
+      "title": "מכתש רמון",
+      "titleEn": "Ramon Crater",
+      "date": "2026-04-01",
+      "time": "06:00",
+      "difficulty": "קשה",
+      "difficultyLevel": "hard",
+      "location": "מצפה רמון",
+      "locationEn": "Mitzpe Ramon",
+      "duration": "8 שעות",
+      "distance": "80 ק״מ",
+      "elevation": "+1,800 מ׳",
+      "spotsAvailable": 4,
+      "maxParticipants": 10,
+      "price": 250,
+      "description": "הרפתקה אפית במכתש הגדול בעולם - למנוסים בלבד!",
+      "highlights": [
+        "נופי מדבר ייחודיים",
+        "שבילים טכניים",
+        "חוויית מדבר אמיתית"
+      ]
+    },
+    {
+      "id": "tour-006",
+      "title": "עמק יזרעאל",
+      "titleEn": "Jezreel Valley",
+      "date": "2026-04-05",
+      "time": "07:00",
+      "difficulty": "בינונית",
+      "difficultyLevel": "medium",
+      "location": "עפולה",
+      "locationEn": "Afula",
+      "duration": "4 שעות",
+      "distance": "45 ק״מ",
+      "elevation": "+300 מ׳",
+      "spotsAvailable": 10,
+      "maxParticipants": 20,
+      "price": 130,
+      "description": "רכיבה נוחה בעמק הירוק עם תצפיות מרהיבות.",
+      "highlights": [
+        "שדות פריחה בעונה",
+        "כפרים היסטוריים",
+        "שטח פתוח ונוח"
+      ]
+    }
+  ]
+}

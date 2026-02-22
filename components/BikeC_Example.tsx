@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import ToursCalendar from './ToursCalendar';
 
 /**
  * BikeC Theme Example Component
@@ -42,6 +43,9 @@ export default function BikeCExample() {
           </button>
         </div>
       </section>
+
+      {/* Tours Calendar Section */}
+      <ToursCalendar />
 
       {/* Features Grid */}
       <section className="section-bikec bg-bikec-black">
