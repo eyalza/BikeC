@@ -147,6 +147,82 @@ Could not find a production build in the '.next' directory.
 
 ---
 
+## #6 — TypeScript Strictness in Production Builds
+
+**Date:** February 2026  
+**File:** `components/ToursCalendar.tsx`  
+**Context:** Code passed IDE linter and local `npm run dev` but failed on Vercel's `next build`.
+
+### Why Local ≠ Vercel
+
+| Environment | Type Checking |
+|---|---|
+| `npm run dev` | Incremental, lenient — skips some checks |
+| IDE linter | Language server heuristics, can miss errors |
+| `npm run build` / Vercel | Full `tsc --noEmit`, strict, clean slate |
+
+The only reliable way to simulate Vercel locally is:
+```bash
+node node_modules/.bin/tsc --noEmit
+```
+
+### The Pattern That Broke on Vercel: Union Types in JSON Interfaces
+
+```typescript
+// ❌ Fails strict build — JSON gives `string`, not the literal union
+interface Tour {
+  difficultyLevel: 'easy' | 'medium' | 'hard';
+}
+const tours: Tour[] = toursData.tours; // Type error on Vercel
+```
+
+### The Pattern That Passes Everywhere: Interface + Type Guard + Record
+
+```typescript
+// ✅ Step 1 — Interface uses `string` (honest about what JSON gives you)
+interface Tour {
+  difficultyLevel: string;
+}
+
+// ✅ Step 2 — Named type for the valid values
+type DifficultyLevel = 'easy' | 'medium' | 'hard';
+
+// ✅ Step 3 — Type guard narrows at the point of use, not at import
+function isDifficultyLevel(value: string): value is DifficultyLevel {
+  return value === 'easy' || value === 'medium' || value === 'hard';
+}
+
+// ✅ Step 4 — Record exhaustively maps all valid values (compile-time checked)
+const DIFFICULTY_STYLES: Record<DifficultyLevel, string> = {
+  easy:   '...',
+  medium: '...',
+  hard:   '...',
+};
+
+// ✅ Step 5 — Safe lookup with fallback
+function getDifficultyStyle(level: string): string {
+  return isDifficultyLevel(level) ? DIFFICULTY_STYLES[level] : DEFAULT_STYLE;
+}
+```
+
+### What We Tried That Didn't Fully Work
+
+| Approach | Local | Vercel | Why |
+|---|---|---|---|
+| Union in interface | ❌ | ❌ | JSON is always `string` |
+| `as unknown as Tour[]` | ✅ | ❌ | Casts lie, strict build rejects |
+| `as Tour[]` directly | ✅ | ❌ | Insufficient type overlap |
+| `string` + type guard | ✅ | ✅ | Honest types, no casts |
+
+### Rule: Always Validate Locally With the Full Compiler
+Before pushing to Vercel, run:
+```bash
+node node_modules/.bin/tsc --noEmit
+```
+If this exits `0`, the Vercel build will pass TypeScript checks.
+
+---
+
 ## #5 — Cache: Clear `.next` After Major Version Upgrades
 
 **Date:** February 2026  

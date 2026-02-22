@@ -14,4 +14,5 @@
 1. **Always use RTL properties**: Use `ps-` instead of `pl-`, `text-start` instead of `text-right`.
 2. **Image Paths**: Always reference images from `/images/` (not `/public/images/`). Verify filename extensions (avoid .png.png).
 3. **Consistency**: Reference `@PRD.md` and `@LESSONS_LEARNED.md` before starting any new feature.
-4. **Strict Type Casting for JSON**: When importing JSON, use `string` (not union literals) in interfaces. Narrow to specific types using a type guard function at the point of use. Never rely on `as unknown as T` casts — they can fail on Vercel strict builds.
+4. **Strict Type Casting for JSON**: When importing JSON data into a typed interface, **never use union literal types** (e.g. `'easy' | 'medium' | 'hard'`). Use `string` in the interface, define the union as a separate `type`, and narrow it with a **type guard** at the point of use. Never rely on `as unknown as T` casts — they can pass locally but fail on Vercel's strict `next build`.
+5. **Validate TypeScript Before Pushing**: Run `node node_modules/.bin/tsc --noEmit` locally before every Vercel deploy. Exit code `0` means the build will pass. This simulates the exact check Vercel runs.
