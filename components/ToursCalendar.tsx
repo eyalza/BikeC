@@ -23,7 +23,7 @@ interface Tour {
 }
 
 export default function ToursCalendar() {
-  const tours: Tour[] = toursData.tours;
+  const tours = toursData.tours as unknown as Tour[];
 
   // Get difficulty badge styling
   const getDifficultyStyle = (level: string) => {

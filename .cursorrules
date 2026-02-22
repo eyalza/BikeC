@@ -13,4 +13,4 @@
 ## Critical AI Instructions
 1. **Always use RTL properties**: Use `ps-` instead of `pl-`, `text-start` instead of `text-right`.
 2. **Image Paths**: Always reference images from `/images/` (not `/public/images/`). Verify filename extensions (avoid .png.png).
-3. **Consistency**: Reference `@PRD.md` and `@LESSONS_LEARNED.md` before starting any new feature.
+3. **Consistency**: Reference `@PRD.md` and `@LESSONS_LEARNED.md` before starting any new feature. The LESSONS_LEARNED.md file lives at the project root.
