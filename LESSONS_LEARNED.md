@@ -5,33 +5,66 @@ Reference this file (alongside `@PRD.md`) before starting any new feature.
 
 ---
 
-## #1 — TypeScript: JSON Imports Lose Literal Union Types
+## #1 — Strict Type Casting: JSON Imports and Union Types
 
 **Date:** February 2026  
 **File:** `components/ToursCalendar.tsx`  
-**Build Error:**
+**Build Error (Vercel):**
 ```
 Type 'string' is not assignable to type '"easy" | "medium" | "hard"'.
 ```
 
 ### Root Cause
-When TypeScript imports a JSON file (via `resolveJsonModule`), it infers all string values as the broad `string` type — not as their specific literal values. So even though `tours.json` contains `"difficultyLevel": "hard"`, TypeScript types it as `string`, which is incompatible with the union `'easy' | 'medium' | 'hard'` defined in the interface.
+When TypeScript imports a JSON file (via `resolveJsonModule`), it infers all string values as the broad `string` type — never as literal unions. So `"difficultyLevel": "hard"` in JSON becomes `string`, not `'hard'`.
 
+### What Didn't Work
+The `as unknown as Tour[]` double-cast fixed it locally but **still failed on Vercel's strict build**. Vercel runs a clean `next build` that can behave differently from the local dev server's type checking.
+
+### The Correct Fix (3 parts)
+
+**1. Use `string` in the interface — match what JSON actually gives you:**
 ```typescript
-// ❌ FAILS at build — TypeScript sees difficultyLevel as `string`, not the union
-const tours: Tour[] = toursData.tours;
+// ❌ BREAKS — JSON will never give you a literal union
+interface Tour {
+  difficultyLevel: 'easy' | 'medium' | 'hard';
+}
 
-// ✅ CORRECT — double cast breaks the type mismatch safely
-const tours = toursData.tours as unknown as Tour[];
+// ✅ WORKS — matches JSON's actual inferred type
+interface Tour {
+  difficultyLevel: string;
+}
 ```
 
-### Why `as unknown as Tour[]` and not just `as Tour[]`?
-A direct `as Tour[]` can still fail if TypeScript considers the types to have "insufficient overlap." The intermediate `as unknown` resets the type chain, letting the final `as Tour[]` assert cleanly. This is the standard TypeScript pattern for cross-type assertions.
+**2. Define the union as a separate type with a type guard:**
+```typescript
+type DifficultyLevel = 'easy' | 'medium' | 'hard';
 
-### Prevention Going Forward
-- Always use `as unknown as YourType[]` when casting imported JSON to interfaces with **union type fields**.
-- Keep interface field names in sync with JSON field names exactly.
-- Consider defining a `types/tours.ts` file and importing from there instead of co-locating the interface, so it can be shared and tested independently.
+function isDifficultyLevel(value: string): value is DifficultyLevel {
+  return value === 'easy' || value === 'medium' || value === 'hard';
+}
+```
+
+**3. Use the type guard wherever you need narrowed behavior:**
+```typescript
+const DIFFICULTY_STYLES: Record<DifficultyLevel, string> = {
+  easy: 'bg-green-500/20 text-green-400 border-green-500/50',
+  medium: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/50',
+  hard: 'bg-red-500/20 text-red-400 border-red-500/50',
+};
+
+function getDifficultyStyle(level: string): string {
+  return isDifficultyLevel(level) ? DIFFICULTY_STYLES[level] : DEFAULT_STYLE;
+}
+```
+
+### Why This Pattern is Superior
+- **No casts at all** — the interface honestly reflects JSON's types.
+- **Runtime safe** — the type guard validates at runtime, not just compile time.
+- **Vercel-proof** — no strictness mode can break it because there's no lie.
+- **Extensible** — adding a new difficulty level means updating one type + one Record.
+
+### Rule: Strict Type Casting for JSON Imports
+> When importing JSON data, **never use union literal types in the interface**. Use `string` in the interface and narrow with a **type guard** at the point of use. This survives all build environments.
 
 ---
 

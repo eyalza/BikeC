@@ -1,7 +1,8 @@
 import React from 'react';
-import toursData from '@/data/tours.json';
+import toursData from '../data/tours.json';
 
-// Type definitions
+type DifficultyLevel = 'easy' | 'medium' | 'hard';
+
 interface Tour {
   id: string;
   title: string;
@@ -9,7 +10,7 @@ interface Tour {
   date: string;
   time: string;
   difficulty: string;
-  difficultyLevel: 'easy' | 'medium' | 'hard';
+  difficultyLevel: string;
   location: string;
   locationEn: string;
   duration: string;
@@ -22,22 +23,24 @@ interface Tour {
   highlights: string[];
 }
 
-export default function ToursCalendar() {
-  const tours = toursData.tours as unknown as Tour[];
+const DIFFICULTY_STYLES: Record<DifficultyLevel, string> = {
+  easy: 'bg-green-500/20 text-green-400 border-green-500/50',
+  medium: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/50',
+  hard: 'bg-red-500/20 text-red-400 border-red-500/50',
+};
 
-  // Get difficulty badge styling
-  const getDifficultyStyle = (level: string) => {
-    switch (level) {
-      case 'easy':
-        return 'bg-green-500/20 text-green-400 border-green-500/50';
-      case 'medium':
-        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/50';
-      case 'hard':
-        return 'bg-red-500/20 text-red-400 border-red-500/50';
-      default:
-        return 'bg-bikec-secondary/20 text-bikec-secondary border-bikec-secondary/50';
-    }
-  };
+const DEFAULT_DIFFICULTY_STYLE = 'bg-bikec-secondary/20 text-bikec-secondary border-bikec-secondary/50';
+
+function isDifficultyLevel(value: string): value is DifficultyLevel {
+  return value === 'easy' || value === 'medium' || value === 'hard';
+}
+
+function getDifficultyStyle(level: string): string {
+  return isDifficultyLevel(level) ? DIFFICULTY_STYLES[level] : DEFAULT_DIFFICULTY_STYLE;
+}
+
+export default function ToursCalendar() {
+  const tours: Tour[] = toursData.tours;
 
   // Format date to Hebrew
   const formatDate = (dateString: string) => {
